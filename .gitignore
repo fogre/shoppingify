@@ -1,0 +1,11 @@
+*/.env
+*/mongo.js
+/.idea
+# dependencies
+*/node_modules
+*/.pnp
+*/.pnp.js
+*/build
+
+# testing
+*/coverage
