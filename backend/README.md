@@ -14,20 +14,20 @@ Testing uses jest, mongodb-memory-server to run the DB in memory, and apollo-ser
 
 ## Available scripts
 
-### dev
+#### dev
 Starts the server in development mode and uses the MongoDB developement database
 
 ### test ["path"]
 Runs all tests or a single single testfile in ["path"]
 
-### initDevDB
+#### initDevDB
 * Runs node initDbDefaults to developement MongoDB uri.
 * Seeds DB with default data, that can be found in ./data/defaultData
 * Takes optional npm cli-argument --dropdb. If --dropDB is set it drops the developement database before seeding.
 
 To seed the production DB run "node initDbDefaults.js"
 
-### watch
+#### watch
 Runs eslint in watch mode
 
 
