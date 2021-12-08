@@ -1,4 +1,5 @@
 const { gql } = require('apollo-server-express')
+const { USER_STATISTICS } = require('./userQueries')
 
 //fragments
 const LIST_BASE_FIELDS = gql`
@@ -42,8 +43,29 @@ const SHOPPING_LIST = gql`
 `
 //mutation
 const SHOPPING_LIST_FINISH = gql`
+  ${USER_STATISTICS}
   mutation finishList($input: ShoppingListFinishInput) {
-    shoppingListFinish(input: $input)
+    shoppingListFinish(input: $input) {
+      openList {
+        name
+      }
+      history {
+        name
+        status
+        list {
+          category {
+            name
+          }
+          items {
+            item {
+              id
+              name
+            }
+          }
+        }
+      }
+      ...userStatistics
+    }
   }
 `
 const SHOPPING_LIST_SAVE = gql`

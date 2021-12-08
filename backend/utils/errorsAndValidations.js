@@ -19,19 +19,23 @@ const throwUserInputError = (error, args) => {
 }
 
 const verifyCurrentUser = async req => {
-  //get developement user for easier development
+  /*get developement user for easier development
   if (process.env.NODE_ENV === 'development') {
     const currentUser = await User.findOne({ email: 'dev@user.com' })
     return currentUser
-  }
+  }*/
   //production authorization
-  const auth = req && req.headers ? req.headers.authorization : null
-  if (auth && auth.toLowerCase().startsWith('bearer ')) {
-    const decodedToken = jwt.verify(auth.substring(7), config.SECRET)
-    const currentUser = await User.findById(decodedToken.id)
-    return currentUser
+  try {
+    const auth = req ? req.headers.authorization : null
+    if (auth && auth.toLowerCase().startsWith('bearer ')) {
+      const decodedToken = jwt.verify(auth.substring(7), config.SECRET)
+      const currentUser = await User.findById(decodedToken.id)
+      return currentUser
+    }
+    return null
+  } catch(e) {
+    console.log(e)
   }
-  return null
 }
 
 //Date validation
@@ -47,9 +51,9 @@ const sameYearAndMonth = (d1, d2) => {
 const validateDate = (dateInDB, newDate) => {
   if (!dateInDB || dateInDB <= newDate) {
     return new Date(
-      newDate.getYear(),
+      newDate.getFullYear(),
       newDate.getMonth(),
-      newDate.getDay()
+      newDate.getDate()
     )
   }
   throw new UserInputError('Your new date is in the past.')

@@ -21,14 +21,12 @@ const countMonthlyStats = (statistics, shoppingList) => {
 }
 
 // Caclulate percentages for topTypes and then sorts by it
-const calcPercentageAndSort = (statistics, topType, allTypeCount) => {
-  statistics[topType] = statistics[topType].map(t => {
-    return {
-      ...t,
-      percentage: t.count / allTypeCount * 100
-    }
+const calcPercentageAndSort = (topType, allTypeCount) => {
+  topType.forEach(t => {
+    t.percentage = t.count / allTypeCount * 100
   })
-  statistics[topType].sort((a,b) =>
+
+  topType.sort((a,b) =>
     b.percentage - a.percentage
   )
 }
@@ -55,7 +53,7 @@ const calculateStatistics = (statsInDB, shoppingList) => {
   // calculate topItems and topCategories count fields and add new items to those
   for (const listItem of shoppingList.list) {
     const categoryIndex = statistics.topCategories.findIndex(
-      c => c.category === listItem.category
+      c => c.category.toString() === listItem.category.toString()
     )
     if (categoryIndex >= 0) {
       statistics.topCategories[categoryIndex].count += 1
@@ -68,7 +66,7 @@ const calculateStatistics = (statsInDB, shoppingList) => {
 
     for (const item of listItem.items) {
       const itemIndex = statistics.topItems.findIndex(
-        i => i.item === item.item
+        i => i.item.toString() === item.item.toString()
       )
       if (itemIndex >= 0) {
         statistics.topItems[itemIndex].count += 1
@@ -83,10 +81,10 @@ const calculateStatistics = (statsInDB, shoppingList) => {
 
   // calculate percentages and sort the arrays by percentage
   calcPercentageAndSort(
-    statistics, 'topItems', statistics.allItemsCount
+    statistics.topItems, statistics.allItemsCount
   )
   calcPercentageAndSort(
-    statistics, 'topCategories', statistics.allCategoriesCount
+    statistics.topCategories, statistics.allCategoriesCount
   )
 
   return statistics

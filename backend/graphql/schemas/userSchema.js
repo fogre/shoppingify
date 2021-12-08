@@ -1,10 +1,12 @@
 const { gql, UserInputError } = require('apollo-server-express')
+const { DateResolver } = require('graphql-scalars')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 //models
 const User = require('../../models/user')
 //utils
 const { SECRET } = require('../../utils/config')
+const { findAndPopulateUser } = require('../../utils/userFindAndPopulate')
 const {
   authenticateUser,
   throwUserInputError
@@ -38,6 +40,7 @@ const typeDefs = gql`
   
   "User info and her open shopping list, history and statistics"
   type User {
+    id: ID
     email: String!
     openList: ShoppingList
     history: [ShoppingList]
@@ -64,23 +67,13 @@ const typeDefs = gql`
 `
 
 const userResolvers = {
+  Date: DateResolver,
+
   Query: {
     user: async (root, args, context) => {
       const user = authenticateUser(context)
       try {
-        return await User.findById(user._id)
-          .populate({
-            path: 'openList',
-            populate: 'list.category list.items.item'
-          })
-          .populate({
-            path: 'history',
-            populate: 'list.category list.items.item',
-          })
-          .populate({
-            path: 'statistics',
-            populate: 'topItems.item topCategories.category'
-          })
+        return await findAndPopulateUser(user)
       } catch(e) {
         console.log(e)
       }
@@ -107,21 +100,14 @@ const userResolvers = {
     userLogin: async (root, args) => {
       try {
         const user = await User.findOne({ email: args.email })
-          .populate('openList')
-          .populate({
-            path: 'history',
-            populate: 'list.category list.items.item',
-          })
-          .populate({
-            path: 'statistics',
-            populate: 'topItems.item topCategories.category'
-          })
 
         if (!user || !(await bcrypt.compare(args.password, user.passwordHash))) {
           throw new UserInputError('Wrong credentials')
         }
+        const userForRes = await findAndPopulateUser(user)
+
         return {
-          user: user,
+          user: userForRes,
           value: jwt.sign({ id: user._id }, SECRET)
         }
       } catch (e) {

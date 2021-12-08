@@ -56,7 +56,8 @@ const itemResolvers = {
         if (args.id) {
           return await Item.findById(args.id).populate('category')
         }
-        return await Item.findOne(args)
+        console.log(args)
+        return await Item.findOne(args).populate('category')
       } catch (e) {
         throwUserInputError(e, args)
       }

@@ -18,15 +18,12 @@ Testing uses jest, mongodb-memory-server to run the DB in memory, and apollo-ser
 Starts the server in development mode and uses the MongoDB developement database
 
 ### test ["path"]
-Runs a single single testfile
-
-### testAll
-Runs all the tests in ./test folder
+Runs all tests or a single single testfile in ["path"]
 
 ### initDevDB
 * Runs node initDbDefaults to developement MongoDB uri.
 * Seeds DB with default data, that can be found in ./data/defaultData
-* Takes optional npm parameter --dropDB. If "--dropDB=TRUE" drops the developement database before seeding.
+* Takes optional npm cli-argument --dropdb. If --dropDB is set it drops the developement database before seeding.
 
 To seed the production DB run "node initDbDefaults.js"
 

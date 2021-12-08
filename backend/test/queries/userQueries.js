@@ -91,5 +91,5 @@ const USER_LOGIN = gql`
 `
 
 module.exports = {
-  USER, USER_CREATE, USER_LOGIN
+  USER, USER_CREATE, USER_LOGIN, USER_STATISTICS
 }

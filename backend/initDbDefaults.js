@@ -14,9 +14,8 @@ const {
 mongoose.connect(config.MONGODB_URI)
   .then(async () => {
     console.log('connected to MongoDB')
-
     if (
-      process.env.npm_config_dropDB === 'TRUE'
+      process.env.npm_config_dropdb
       && process.env.NODE_ENV === 'development'
     ) {
       console.log('Dropping development database...')

@@ -87,12 +87,11 @@ describe('A ShoppingList can', () => {
 
   it('be finished and sets users openList, history and statistics', async () => {
     let res = await listFinish(newList.date, 'COMPLETED', newList.list)
-    expect(res.data.shoppingListFinish).toBe('COMPLETED')
+    const user = res.data.shoppingListFinish
 
-    res = await testClient.query(USER)
-    const user = res.data.user
     expect(user.history.length).toBe(1)
     expect(user.history[0].name).toBe(newList.name)
+    expect(user.history[0].status).toBe('COMPLETED')
     expect(user.history[0].list[0].category.name)
       .toBe(categoriesAndItems[0].name)
     expect(user.history[0].list[0].items[0].item.id)
@@ -124,10 +123,10 @@ describe('A ShoppingList can', () => {
   it('be cancelled, saved to history but it doesent calculate User statistics', async () => {
     //list was saved on the previous test
     let res = await listFinish(newList.date, 'CANCELLED', newList.list)
-    expect(res.data.shoppingListFinish).toBe('CANCELLED')
+    const user = res.data.shoppingListFinish
 
-    res = await testClient.query(USER)
-    expect(res.data.user.history.length).toBe(2)
-    expectUserStatistics(res.data.user)
+    expect(user.history.length).toBe(2)
+    expect(user.history[0].status).toBe('CANCELLED')
+    expectUserStatistics(user)
   })
 })

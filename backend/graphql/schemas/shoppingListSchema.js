@@ -9,6 +9,7 @@ const {
   validateDate
 } = require('../../utils/errorsAndValidations')
 const calculateStatistics = require('../../utils/calcStatistics')
+const { findAndPopulateUser } = require('../../utils/userFindAndPopulate')
 
 const typeDefs = gql`
   scalar Date
@@ -23,8 +24,8 @@ const typeDefs = gql`
   "Item and item specific fields for the ShoppingList' list field"
   type ListItem {
     item: Item!
-    pcs: Int
-    completed: Boolean
+    pcs: Int!
+    completed: Boolean!
   }
 
   "Input for ListItem in ShoppingList"
@@ -59,10 +60,12 @@ const typeDefs = gql`
 
   "Input for saving ShoppingList"
   input ShoppingListSaveInput {
+    id: ID
     name: String!
     date: Date!
     list: [ListInput]!
     itemCount: Int
+    status: StatusEnum
   }
 
   "Input for completing or cancelling ShoppingList"
@@ -83,7 +86,7 @@ const typeDefs = gql`
 
     """Complete or cancel ShoppingList with updated List,
        add it to User' history, calculate statistics and set User openList to null"""
-    shoppingListFinish(input: ShoppingListFinishInput): StatusEnum
+    shoppingListFinish(input: ShoppingListFinishInput): User
   }
 `
 
@@ -161,11 +164,12 @@ const shoppingListResolvers = {
         if (input.status === 'completed') {
           user.statistics = calculateStatistics(user.statistics, shoppingList)
         }
+
         user.history.unshift(shoppingList._id)
         user.openList = null
         await user.save()
 
-        return shoppingList.status
+        return await findAndPopulateUser(user)
       } catch (e) {
         throwUserInputError(e, input)
       }

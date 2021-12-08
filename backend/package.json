@@ -10,7 +10,6 @@
     "dev": "NODE_ENV=development nodemon index.js",
     "initDevDB": "NODE_ENV=development node initDbDefaults.js",
     "test": "jest --runInBand --detectOpenHandles",
-    "testAll": "npm run test ./test",
     "watch": "esw -w"
   },
   "dependencies": {
