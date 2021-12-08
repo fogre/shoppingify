@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url('/fonts/Quicksand.woff2') format('woff2 supports variations'),
+    url('/fonts/Quicksand.woff2') format('woff2');
+}
