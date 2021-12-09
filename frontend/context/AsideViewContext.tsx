@@ -7,14 +7,14 @@ export enum AsideView {
   User = 'USER'
 }
 
-interface Payload {
+export interface Payload {
   payload: string | ID | null;
 }
 
 interface AsideContextInterface {
   asideView: AsideView;
   payload: Payload;
-  changeView: (view: AsideView, payload: Payload) => void;
+  changeView: (view: AsideView, payload?: Payload) => void;
   hideAsideView: () => void;
   showAsideView: boolean;
 }
@@ -26,7 +26,7 @@ const AsideViewProvider = ({ children }: { children: React.ReactNode }) => {
   const [showAsideView, setShowAsideView] = useState<boolean>(false);
   const [payload, setPayload] = useState<Payload | null>();
 
-  const changeView = (view: AsideView, viewPayload: Payload = null) => {
+  const changeView = (view: AsideView, viewPayload?: Payload) => {
     if (viewPayload) {
       setPayload(viewPayload);
     }

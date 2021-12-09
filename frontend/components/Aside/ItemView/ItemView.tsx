@@ -2,17 +2,17 @@ import { useContext } from 'react';
 import { useQuery } from 'urql';
 import styled from 'styled-components';
 
-import { AsideContext, NotificationContext, ShoppingListContext } from '@/context';
+import { AsideView, Payload, AsideContext, NotificationContext, ShoppingListContext } from '@/context';
 import { Item, ItemFindOneDocument } from '@/graphql/generated';
 
 import { Button, BackIconButton } from '@/components/Buttons';
 import { BottomActions, Scrollable, ScrollContent } from '../LayoutHelpers';
 
 interface ItemViewBaseProps {
-  item: Item | null;
-  changeView: () => void;
-  hideAsideView: () => void;
-  children: React.ReactNode;
+  item?: Item | null;
+  changeView: (view: AsideView) => void;
+  hideAsideView?: () => void;
+  children?: React.ReactNode;
 }
 
 const ItemViewBase = ({ item, changeView, hideAsideView, children }: ItemViewBaseProps) => {
@@ -22,7 +22,7 @@ const ItemViewBase = ({ item, changeView, hideAsideView, children }: ItemViewBas
   const handleAddToList = (item: Item): void => {
     if (item) {
       addItem(item);
-      changeView('SHOPPING_LIST');
+      changeView(AsideView.List);
       hideAsideView();
       showNotification({
         type: 'success',
@@ -34,7 +34,7 @@ const ItemViewBase = ({ item, changeView, hideAsideView, children }: ItemViewBas
   return (
     <Scrollable>
       <BackIconButton
-        onClick={() => changeView('SHOPPING_LIST')}
+        onClick={() => changeView(AsideView.List)}
       />
       {children}
       <BottomActions>
@@ -58,11 +58,11 @@ const ItemView = () => {
 
   const [result] = useQuery({
     query: ItemFindOneDocument,
-    variables: { id: payload }
+    variables: { id: payload.toString() }
   });
 
   if (result.fetching || result.error) {
-    return <ItemViewBase item={null} changeView={changeView} />;
+    return <ItemViewBase item={null} changeView={changeView} />
   }
 
   const item: Item = result.data.itemFindOne;

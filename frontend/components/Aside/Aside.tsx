@@ -11,7 +11,7 @@ import UserView from './UserView';
 
 const BACKGROUNDCOLOR = {
   //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  NEW_ITEM: COLORS.grey[95 as keyof COLORS.grey],
+  NEW_ITEM: COLORS.grey[95],
   ITEM: 'white',
   SHOPPING_LIST: COLORS.orangeLight,
   USER: 'white'
@@ -20,7 +20,7 @@ const BACKGROUNDCOLOR = {
 const Aside = () => {
   const { asideView } = useContext(AsideContext);
   //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const backgroundColor: string | undefined = BACKGROUNDCOLOR[asideView as keyof BACKGROUNDCOLOR];
+  const backgroundColor: string | undefined = BACKGROUNDCOLOR[asideView];
   let ComponentToView;
 
   if (!asideView || asideView === 'SHOPPING_LIST') {
@@ -36,9 +36,11 @@ const Aside = () => {
   }
 
   return (
-    <Wrapper style={{
-      '--background-color': backgroundColor
-    }}>
+    <Wrapper
+      style={{
+        /* @ts-ignore */
+        '--background-color': backgroundColor
+      }}>
       <ComponentToView />
     </Wrapper>
   );

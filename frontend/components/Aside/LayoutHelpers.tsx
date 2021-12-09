@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const BottomActions = ({ grey, children }: { grey: boolean, children: React.ReactNode }) => (
+export const BottomActions = ({ grey, children }: { grey?: boolean, children: React.ReactNode }) => (
     <BottomActionsWrapper grey={grey}>
       {children}
     </BottomActionsWrapper>

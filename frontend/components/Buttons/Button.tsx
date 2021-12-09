@@ -4,7 +4,8 @@ import { COLORS, QUERIES } from '@/constants';
 
 import UnstyledButton from './UnstyledButton';
 
-interface props {
+interface Props {
+  disabled?: boolean;
   style: string;
   children: React.ReactNode
 }
@@ -16,9 +17,9 @@ const BACKGROUNDCOLOR = {
   white: COLORS.white
 };
 
-const Button = ({ style, children, ...delegated }: props) => {
+const Button: React.FC<props> = ({ style, disabled, children, ...props }: Props) => {
   //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const backgroundColor: string = BACKGROUNDCOLOR[style as keyof BACKGROUNDCOLOR];
+  const backgroundColor: string = BACKGROUNDCOLOR[style];
 
   return (
     <DefaultButton
@@ -26,7 +27,7 @@ const Button = ({ style, children, ...delegated }: props) => {
         '--background-color': backgroundColor,
         '--text-color': style === 'white' ? 'black' : 'white'
       }}
-      {...delegated}
+      {...props}
     >
       {children}
     </DefaultButton>
