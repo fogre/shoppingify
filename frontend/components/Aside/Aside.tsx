@@ -38,7 +38,6 @@ const Aside = () => {
   return (
     <Wrapper
       style={{
-        /* @ts-ignore */
         '--background-color': backgroundColor
       }}>
       <ComponentToView />

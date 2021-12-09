@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useQuery } from 'urql';
 import styled from 'styled-components';
 
-import { AsideView, Payload, AsideContext, NotificationContext, ShoppingListContext } from '@/context';
+import { AsideView, AsideContext, NotificationContext, ShoppingListContext } from '@/context';
 import { Item, ItemFindOneDocument } from '@/graphql/generated';
 
 import { Button, BackIconButton } from '@/components/Buttons';
@@ -62,7 +62,7 @@ const ItemView = () => {
   });
 
   if (result.fetching || result.error) {
-    return <ItemViewBase item={null} changeView={changeView} />
+    return <ItemViewBase item={null} changeView={changeView} />;
   }
 
   const item: Item = result.data.itemFindOne;

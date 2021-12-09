@@ -17,7 +17,7 @@ const BACKGROUNDCOLOR = {
   white: COLORS.white
 };
 
-const Button: React.FC<props> = ({ style, disabled, children, ...props }: Props) => {
+const Button: React.FC<props> = ({ style, children, ...props }: Props) => {
   //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const backgroundColor: string = BACKGROUNDCOLOR[style];
 
