@@ -7,12 +7,14 @@ import { AsideContext } from '@/context';
 import ItemView from './ItemView';
 import NewItemView from './NewItemView';
 import ShoppingListView from './ShoppingListView';
+import UserView from './UserView';
 
 const BACKGROUNDCOLOR = {
   //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   NEW_ITEM: COLORS.grey[95 as keyof COLORS.grey],
   ITEM: 'white',
-  SHOPPING_LIST: COLORS.orangeLight
+  SHOPPING_LIST: COLORS.orangeLight,
+  USER: 'white'
 };
 
 const Aside = () => {
@@ -27,6 +29,8 @@ const Aside = () => {
     ComponentToView = ItemView;
   } else if (asideView === 'NEW_ITEM') {
     ComponentToView = NewItemView;
+  } else if (asideView === 'USER') {
+    ComponentToView = UserView;
   } else {
     throw new Error('Aside view is not right');
   }

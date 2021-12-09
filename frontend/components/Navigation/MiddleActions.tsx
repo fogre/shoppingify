@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 import { COLORS, QUERIES } from '@/constants';
@@ -13,55 +14,65 @@ import {
 } from '/components/Icons';
 
 const MiddleActions = () => {
+  const router = useRouter();
   const { hideAsideView } = useContext(AsideContext);
 
   return (
     <Wrapper>
-      <Link href='/'>
-        <ContentLink>
-          <IconButton
-            size={26}
-            color={COLORS.grey[27]}
-            aria-label={'Open list menu'}
-            onClick={() => hideAsideView()}
-          >
-            <ListIcon />
-          </IconButton>
-          <TooltipWrapper aria-hidden={true}>
-            <Tooltip>list</Tooltip>
-          </TooltipWrapper>
-        </ContentLink>
-      </Link>
+      <LinkWrapper>
+        <BorderThing visible={router.pathname === '/' ? true : false}/>
+        <Link href='/'>
+          <ContentLink>
+            <IconButton
+              size={26}
+              color={COLORS.grey[27]}
+              aria-label={'Open list menu'}
+              onClick={() => hideAsideView()}
+            >
+              <ListIcon />
+            </IconButton>
+            <TooltipWrapper aria-hidden={true}>
+              <Tooltip>list</Tooltip>
+            </TooltipWrapper>
+          </ContentLink>
+        </Link>
+      </LinkWrapper>
 
-      <Link href='/history'>
-        <ContentLink>
-          <IconButton
-            size={26}
-            color={COLORS.grey[27]}
-            onClick={() => hideAsideView()}
-          >
-            <HistoryIcon />
-          </IconButton>
-          <TooltipWrapper aria-hidden={true}>
-            <Tooltip>history</Tooltip>
-          </TooltipWrapper>
-        </ContentLink>     
-      </Link>
+      <LinkWrapper>
+        <BorderThing visible={router.pathname === '/history' ? true : false}/>
+        <Link href='/history'>
+          <ContentLink>
+            <IconButton
+              size={26}
+              color={COLORS.grey[27]}
+              onClick={() => hideAsideView()}
+            >
+              <HistoryIcon />
+            </IconButton>
+            <TooltipWrapper aria-hidden={true}>
+              <Tooltip>history</Tooltip>
+            </TooltipWrapper>
+          </ContentLink>
+        </Link>
+      </LinkWrapper>
 
-      <Link href='/statistics'>
-        <ContentLink>
-          <IconButton
-            size={26}
-            color={COLORS.grey[27]}
-            onClick={() => hideAsideView()}
-          >
-            <StatsIcon />
-          </IconButton>
-          <TooltipWrapper aria-hidden={true}>
-            <Tooltip>statistics</Tooltip>
-          </TooltipWrapper>
-        </ContentLink>
-      </Link>
+      <LinkWrapper>
+        <BorderThing visible={router.pathname === '/statistics' ? true : false}/>
+        <Link href='/statistics'>
+          <ContentLink>
+            <IconButton
+              size={26}
+              color={COLORS.grey[27]}
+              onClick={() => hideAsideView()}
+            >
+              <StatsIcon />
+            </IconButton>
+            <TooltipWrapper aria-hidden={true}>
+              <Tooltip>statistics</Tooltip>
+            </TooltipWrapper>
+          </ContentLink>
+        </Link>
+      </LinkWrapper>  
     </Wrapper>
   );
 };
@@ -73,6 +84,24 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+`;
+
+const LinkWrapper = styled.div`
+  display: flex;
+  height: 100%;
+  width: 100%;
+  position: relative;
+`;
+
+const BorderThing = styled.div`
+  display: ${p => p.visible ? 'block' : 'none'};
+  width: 6px;
+  height: 140%;
+  border-radius: 0 4px 4px 0;
+  background-color: var(--color-primary);
+  position: absolute;
+  top: -20%;
+  left: calc(var(--padding-nav) * -1);
 `;
 
 const ContentLink = styled.a`
@@ -95,7 +124,7 @@ const TooltipWrapper = styled.span`
   opacity: 0;
   position: absolute;
   top: 19%;
-  left: 90%;
+  left: 100%;
   display: flex;
 
   ${ContentLink}:hover & {

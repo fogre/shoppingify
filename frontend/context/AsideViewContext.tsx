@@ -4,6 +4,7 @@ export enum AsideView {
   List = 'SHOPPING_LIST',
   NewItem = 'NEW_ITEM',
   Item = 'ITEM',
+  User = 'USER'
 }
 
 interface Payload {

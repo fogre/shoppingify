@@ -43,6 +43,7 @@ const CheckBoxWrapper = styled.div`
 
 const SingleItem = ({ listItem, category }: ListItemProps) => {
   const [selected, setSelected] = useState<boolean>(false);
+  const { editState } = useContext(ShoppingListContext);
 
   return (
     <ul
@@ -54,7 +55,9 @@ const SingleItem = ({ listItem, category }: ListItemProps) => {
           category={category}
           listItem={listItem}
         />
-        <ItemName>{listItem.item.name}</ItemName>
+        <ItemName checked={!editState && listItem.completed}>
+          {listItem.item.name}
+        </ItemName>
         <ItemPcs
           category={category}
           listItem={listItem}
@@ -84,6 +87,9 @@ const ItemName = styled.p`
   text-overflow: ellipsis;
   width: 100%;
   margin-right: 5px;
+  text-decoration: ${p => p.checked
+    ? 'line-through': 'none'
+  };
 `;
 
 const ListItems = () => {

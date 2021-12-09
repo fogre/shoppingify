@@ -19,15 +19,15 @@ const throwUserInputError = (error, args) => {
 }
 
 const verifyCurrentUser = async req => {
-  /*get developement user for easier development
+  /*helper to get developement user for easier development
   if (process.env.NODE_ENV === 'development') {
     const currentUser = await User.findOne({ email: 'dev@user.com' })
     return currentUser
   }*/
-  //production authorization
+
   try {
     const auth = req ? req.headers.authorization : null
-    if (auth && auth.toLowerCase().startsWith('bearer ')) {
+    if (auth && auth.toLowerCase().startsWith('bearer ') && auth.length > 14) {
       const decodedToken = jwt.verify(auth.substring(7), config.SECRET)
       const currentUser = await User.findById(decodedToken.id)
       return currentUser

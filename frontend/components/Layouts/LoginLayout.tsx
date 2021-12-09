@@ -1,6 +1,8 @@
 import type { ReactElement } from 'react';
 import styled from 'styled-components';
 
+import { QUERIES } from '@/constants';
+
 const LoginLayout = ({ children }: React.ReactNode) => (
   <Wrapper>
     <Card>
@@ -32,4 +34,13 @@ const Card = styled.div`
   box-shadow: var(--shadow-secondary);
   width: 400px;
   padding: 30px 20px 10px 20px;
+
+  @media ${QUERIES.mobile} {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    box-shadow: none;
+    border: none;
+  }
 `;

@@ -40,7 +40,9 @@ const Navigation = () => {
   return (
     <Wrapper>
       <IconButton size={42}>
-        <LogoIcon />
+        <LogoIcon
+          onClick={() => changeView('USER')}
+        />
       </IconButton>
 
       <MiddleActions />

@@ -11,7 +11,6 @@ export const GlobalStyle = createGlobalStyle`
     --reach-dialog: 1;
     isolation: isolate;
 
-    /*css variables*/
     --color-black: ${COLORS.black};
     --color-danger: ${COLORS.danger};
     --color-grey-27: ${COLORS.grey[27]};
@@ -80,6 +79,10 @@ export const GlobalStyle = createGlobalStyle`
 
   h1, h3, h4 {
     font-weight: 500;
+  }
+
+  p::first-letter, h2::first-letter, h3::first-letter, h4::first-letter {
+    text-transform: uppercase;
   }
 
   svg {

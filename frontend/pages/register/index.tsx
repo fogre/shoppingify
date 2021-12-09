@@ -2,15 +2,22 @@ import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useMutation } from 'urql';
-import { Formik, Form } from 'formik';
+import { Formik } from 'formik';
 import styled from 'styled-components';
 
 import { NotificationContext } from '@/context';
 import { UserCreateDocument } from '@/graphql/generated';
 
 import { getLoginLayout } from '@/components/Layouts';
-import { Button, BackIconButton } from '@/components/Buttons';
-import { ErrorMessage, FieldWrapper, Label, Input } from '@/components/Forms';
+import { BackIconButton } from '@/components/Buttons';
+import {
+  ErrorMessage,
+  FieldWrapper,
+  Label,
+  Input,
+  LoginButton,
+  LoginStyledForm
+} from '@/components/Forms';
 
 interface ValuesIF {
   email: string;
@@ -83,80 +90,79 @@ const RegisterPage = () => {
             <BackIconButton />
           </a>
         </Link>
-      </BackButtonWrapper>  
-      <h3>Register</h3>
-      <Formik
-        initialValues={DEFAULT_VALUES}
-        validate={values => validateForm(values)}
-        onSubmit={values => handleSubmit(values)}
-      >
-        {({ isValid, dirty, errors, touched }) => {
-          return (
-            <StyledForm>
-              <FieldWrapper>
-                <Label>Email</Label>
-                <Input
-                  id='email'
-                  name='email'
-                  type='email'
-                  placeholder='Enter email'
-                />
-                {errors.email && touched.email &&
-                  <ErrorMessage>{errors.email}</ErrorMessage>
-                }
-                <FieldWrapper />
-                <Input
-                  id='emailCheck'
-                  name='emailCheck'
-                  type='email'
-                  placeholder='Confirm email address'
-                />
-                {errors.emailCheck && touched.emailCheck &&
-                  <ErrorMessage>{errors.emailCheck}</ErrorMessage>
-                }
-              </FieldWrapper>
-              <FieldWrapper>
-                <Label>Password</Label>
-                <Input
-                  id='password'
-                  name='password'
-                  type='password'
-                  placeholder='Enter password'
-                />
-                {errors.password && touched.password &&
-                  <ErrorMessage>{errors.password}</ErrorMessage>
-                }
-                <FieldWrapper />
-                <Input
-                  id='passwordCheck'
-                  name='passwordCheck'
-                  type='password'
-                  placeholder='Confirm password'
-                />
-                {errors.passwordCheck && touched.passwordCheck &&
-                  <ErrorMessage>{errors.passwordCheck}</ErrorMessage>
-                }
-              </FieldWrapper>
-              <Button
-                style='secondary'
-                type='submit'
-                disabled={!isValid || !dirty}
-              >
-                Register
-              </Button>
-            </StyledForm>  
-          );
-        }}  
-      </Formik>
+      </BackButtonWrapper>
+      <div>
+        <h3>Register</h3>
+        <Formik
+          initialValues={DEFAULT_VALUES}
+          validate={values => validateForm(values)}
+          onSubmit={values => handleSubmit(values)}
+        >
+          {({ isValid, dirty, errors, touched }) => {
+            return (
+              <LoginStyledForm>
+                <FieldWrapper>
+                  <Label>Email</Label>
+                  <Input
+                    id='email'
+                    name='email'
+                    type='email'
+                    placeholder='Enter email'
+                  />
+                  {errors.email && touched.email &&
+                    <ErrorMessage>{errors.email}</ErrorMessage>
+                  }
+                  <FieldWrapper />
+                  <Input
+                    id='emailCheck'
+                    name='emailCheck'
+                    type='email'
+                    placeholder='Confirm email address'
+                  />
+                  {errors.emailCheck && touched.emailCheck &&
+                    <ErrorMessage>{errors.emailCheck}</ErrorMessage>
+                  }
+                </FieldWrapper>
+                <FieldWrapper>
+                  <Label>Password</Label>
+                  <Input
+                    id='password'
+                    name='password'
+                    type='password'
+                    placeholder='Enter password'
+                  />
+                  {errors.password && touched.password &&
+                    <ErrorMessage>{errors.password}</ErrorMessage>
+                  }
+                  <FieldWrapper />
+                  <Input
+                    id='passwordCheck'
+                    name='passwordCheck'
+                    type='password'
+                    placeholder='Confirm password'
+                  />
+                  {errors.passwordCheck && touched.passwordCheck &&
+                    <ErrorMessage>{errors.passwordCheck}</ErrorMessage>
+                  }
+                </FieldWrapper>
+                <LoginButton
+                  style='secondary'
+                  type='submit'
+                  disabled={!isValid || !dirty}
+                >
+                  Register
+                </LoginButton>
+              </LoginStyledForm>  
+            );
+          }}  
+        </Formik>
+      </div>
+      <div />
     </>
   );
 };
 
 RegisterPage.getLayout = getLoginLayout;
-
-const StyledForm = styled(Form)`
-  margin-top: var(--form-margin);
-`;
 
 const BackButtonWrapper = styled.div`
   margin-bottom: var(--main-margin);

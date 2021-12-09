@@ -1,0 +1,12 @@
+{
+	"author": "fogre",
+	"name": "Shoppingify App",
+	"version": "1.0",
+	"private": true,
+	"description": "Shoppingify devChallenge",
+	"license": "MIT",
+	"scripts": {
+		"deploy": "git add . && git commit -m deploy && git push && npm run heroku",
+		"heroku": "git subtree push --prefix backend heroku master"
+	}
+}

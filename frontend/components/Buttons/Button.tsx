@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { COLORS } from '@/constants';
+import { COLORS, QUERIES } from '@/constants';
 
 import UnstyledButton from './UnstyledButton';
 
@@ -42,6 +42,10 @@ const DefaultButton = styled(UnstyledButton)`
 
   & :disabled {
     background-color: var(--color-grey-74);
+  }
+
+  @media ${QUERIES.mobile} {
+    padding: 15px 20px;
   }
 `;
 

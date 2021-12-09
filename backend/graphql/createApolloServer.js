@@ -8,6 +8,7 @@ const { typeDefs: categoryTD, categoryResolvers } = require('./schemas/categoryS
 const { typeDefs: itemTD, itemResolvers } = require('./schemas/itemSchema')
 const { typeDefs: shoppingListTD, shoppingListResolvers } = require('./schemas/shoppingListSchema')
 const { typeDefs: userTD, userResolvers } = require('./schemas/userSchema')
+const { typeDefs: pingTD, pingResolvers } = require('./schemas/pingSchema')
 //utils
 const { verifyCurrentUser } = require('../utils/errorsAndValidations')
 
@@ -23,13 +24,21 @@ const baseTypeDefs = gql`
 const createApolloServer = async () => {
 
   const server = new ApolloServer({
-    typeDefs: [baseTypeDefs, categoryTD, itemTD, shoppingListTD, userTD],
+    typeDefs: [
+      baseTypeDefs,
+      categoryTD,
+      itemTD,
+      shoppingListTD,
+      userTD,
+      pingTD
+    ],
     resolvers: merge(
       {},
       categoryResolvers,
       itemResolvers,
       shoppingListResolvers,
-      userResolvers
+      userResolvers,
+      pingResolvers
     ),
     context: async ({ req }) => {
       const currentUser = await verifyCurrentUser(req)

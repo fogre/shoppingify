@@ -1,20 +1,26 @@
 import { useContext } from 'react';
 import { useRouter } from 'next/router';
-import { withUrqlClient } from 'next-urql';
+import { useQuery } from 'urql';
 
 import Link from 'next/link';
 import { useMutation } from 'urql';
-import { Formik, Form } from 'formik';
+import { Formik } from 'formik';
 import styled from 'styled-components';
 
 import { NotificationContext } from '@/context';
-import { UserLoginDocument } from '@/graphql/generated';
-import { urqlClientOptions } from '@/graphql/urqlClient';
+import { PingDocument, UserLoginDocument } from '@/graphql/generated';
 import { setToken } from '@/utils/tokenUtils';
 
 import { getLoginLayout } from '@/components/Layouts';
 import { Button } from '@/components/Buttons';
-import { ErrorMessage, FieldWrapper, Label, Input } from '@/components/Forms';
+import {
+  ErrorMessage,
+  FieldWrapper,
+  Label,
+  Input,
+  LoginButton,
+  LoginStyledForm
+} from '@/components/Forms';
 import { Icon, LogoIcon } from '@/components/Icons';
 
 interface ValuesIF {
@@ -42,6 +48,17 @@ const LoginPage = () => {
   const router = useRouter();
   const { showNotification } = useContext(NotificationContext);
   const [, logInMutation] = useMutation(UserLoginDocument);
+  //wake up the server
+  const [result] = useQuery({
+    query: PingDocument
+  });
+
+  if (result.error) {
+    showNotification({
+      type: 'error',
+      message: 'Failed to connect to the server'
+    });
+  }
 
   const handleSubmit = async (values: ValuesIF) => {
     try {
@@ -72,59 +89,61 @@ const LoginPage = () => {
         </Icon>  
         <h2>Shoppingify</h2>
       </HeadingWrapper>
-      <h3>Log in</h3>
-      <Formik
-        initialValues={DEFAULT_VALUES}
-        validate={values => validateForm(values)}
-        onSubmit={values => handleSubmit(values)}
-      >
-        {({ isValid, dirty, errors, touched }) => {
-          return (
-            <StyledForm>
-              <FieldWrapper>
-                <Label>Email</Label>
-                <Input
-                  id='email'
-                  name='email'
-                  type='email'
-                  placeholder='Enter email'
-                />
-                {errors.email && touched.email &&
-                  <ErrorMessage>{errors.email}</ErrorMessage>
-                }
-              </FieldWrapper>
-              <FieldWrapper>
-                <Label>Password</Label>
-                <Input
-                  id='password'
-                  name='password'
-                  type='password'
-                  placeholder='Enter password'
-                />
-                {errors.password && touched.password &&
-                  <ErrorMessage>{errors.password}</ErrorMessage>
-                }
-              </FieldWrapper>
-              <ButtonWrapper>
-                <LoginButton
-                  disabled={!isValid || !dirty}
-                  type='submit'
-                >
-                  Login
-                </LoginButton>
-                <TestAccountButton
-                  type='button'
-                  onClick={() => handleSubmit({
-                    email: 'dev@user.com',
-                    password: 'verysekret'
-                  })}
-                >Login with test account
-                </TestAccountButton>  
-              </ButtonWrapper>  
-            </StyledForm>
-          );
-        }}  
-      </Formik>
+      <div>
+        <h3>Log in</h3>
+        <Formik
+          initialValues={DEFAULT_VALUES}
+          validate={values => validateForm(values)}
+          onSubmit={values => handleSubmit(values)}
+        >
+          {({ isValid, dirty, errors, touched }) => {
+            return (
+              <LoginStyledForm>
+                <FieldWrapper>
+                  <Label>Email</Label>
+                  <Input
+                    id='email'
+                    name='email'
+                    type='email'
+                    placeholder='Enter email'
+                  />
+                  {errors.email && touched.email &&
+                    <ErrorMessage>{errors.email}</ErrorMessage>
+                  }
+                </FieldWrapper>
+                <FieldWrapper>
+                  <Label>Password</Label>
+                  <Input
+                    id='password'
+                    name='password'
+                    type='password'
+                    placeholder='Enter password'
+                  />
+                  {errors.password && touched.password &&
+                    <ErrorMessage>{errors.password}</ErrorMessage>
+                  }
+                </FieldWrapper>
+                <ButtonWrapper>
+                  <LoginButton
+                    disabled={!isValid || !dirty}
+                    type='submit'
+                  >
+                    Login
+                  </LoginButton>
+                  <TestAccountButton
+                    type='button'
+                    onClick={() => handleSubmit({
+                      email: 'dev@user.com',
+                      password: 'verysekret'
+                    })}
+                  >Login with test account
+                  </TestAccountButton>  
+                </ButtonWrapper>  
+              </LoginStyledForm>
+            );
+          }}  
+        </Formik>
+      </div>  
       <LinkWrapper>
         <Link href='/register'>
           <StyledA>Don&apos;t have an account? <strong>Register</strong></StyledA>
@@ -143,19 +162,12 @@ const HeadingWrapper = styled.div`
   margin-bottom: var(--main-margin);
 `;
 
-const StyledForm = styled(Form)`
-  margin-top: var(--form-margin);
-`;
-
 const ButtonWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
   justify-content: space-between;
   align-items: center;
-`;
-
-const LoginButton = styled(Button)`
-  padding: 10px 16px;
-  background-color: var(--color-secondary);
 `;
 
 const TestAccountButton = styled(Button)`
@@ -185,5 +197,5 @@ const StyledA = styled.a`
   }
 `;
 
-export default withUrqlClient(() => urqlClientOptions)(LoginPage);
+export default LoginPage;
 

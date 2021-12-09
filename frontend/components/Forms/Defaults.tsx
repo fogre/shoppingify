@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { Field } from 'formik';
+import { Field, Form } from 'formik';
+
+import { Button } from '@/components/Buttons';
 
 export const ErrorMessage = styled.p`
   font-size: var(--font-small);
@@ -46,4 +48,13 @@ export const Label = styled.label`
   font-size: var(--font-small);
   display: block;
   margin-bottom: 4px;
+`;
+
+export const LoginStyledForm = styled(Form)`
+  margin-top: var(--form-margin);
+`;
+
+export const LoginButton = styled(Button)`
+  padding: 10px 16px;
+  background-color: var(--color-secondary);
 `;

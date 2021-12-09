@@ -21,7 +21,7 @@ const MainLayout = ({ children }: React.ReactNode) => {
     router.push('/login')
       .catch(e => console.log(e));
     return (
-      <div />
+      <div suppressHydrationWarning></div>
     );
   }
 
@@ -54,7 +54,7 @@ const LayoutGrid = ({ children }: React.ReactNode) => {
       </MainGridWrapper>
       <AsideGridWrapper show={showAsideView}>
         <Aside />
-      </AsideGridWrapper>  
+      </AsideGridWrapper>
     </GridWrapper>
   );
 };
@@ -100,14 +100,15 @@ const GridWrapper = styled.div`
 `;
 
 const NavGridWrapper = styled.nav`
+  --padding-nav: 12px;
   grid-area: 'nav';
-  padding: var(--padding-top) 12px;
+  padding: var(--padding-top) var(--padding-nav);
   height: 100%;
 `;
 
 const MainGridWrapper = styled.main`
   grid-area: 'main';
-  background-color: var(--color-grey-95);
+  background-color: hsl(238, 12%, 98%);
   padding: var(--padding-top) var(--padding-main);
   overflow: auto;
   position: relative;

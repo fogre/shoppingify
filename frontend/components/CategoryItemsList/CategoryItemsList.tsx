@@ -5,10 +5,6 @@ import { QUERIES } from '@/constants';
 export const ListWrapper = styled.div`
   padding-top: 60px;
 
-  & *::first-letter {
-    text-transform: uppercase;
-  }
-
   @media ${QUERIES.mobile} {
     padding-top: var(--padding-top);
   }
