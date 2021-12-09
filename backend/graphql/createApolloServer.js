@@ -1,5 +1,9 @@
 const { ApolloServer, gql } = require('apollo-server-express')
-const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core')
+const {
+  ApolloServerPluginDrainHttpServer,
+  ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginLandingPageProductionDefault
+} = require('apollo-server-core')
 const express = require('express')
 const http = require('http')
 const merge = require('lodash.merge')
@@ -44,7 +48,15 @@ const createApolloServer = async () => {
       const currentUser = await verifyCurrentUser(req)
       return { currentUser }
     },
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
+    plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      process.env.NODE_ENV === 'production'
+        ? ApolloServerPluginLandingPageProductionDefault({
+            graphRef: "Shoppingify@current",
+            footer: false,
+          })
+        : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
+    ]
   })
 
   await server.start()
