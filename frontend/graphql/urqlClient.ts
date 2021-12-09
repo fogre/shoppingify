@@ -8,10 +8,12 @@ import {
 
 import { getToken, isServerSide, removeToken } from '@/utils/tokenUtils';
 
+const API_URI = process.env.NEXT_PUBLIC_API_URI || 'http://localhost:4000/'
+
 const ssrCache = ssrExchange({ isClient: !isServerSide });
 
 const urqlClientOptions = {
-  url: "http://localhost:4000/",
+  url: API_URI,
   exchanges: [
     dedupExchange,
     cacheExchange,
