@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 
-import { AsideContext } from '@/context';
+import { AsideView, AsideContext } from '@/context';
 
 import { UnstyledButton } from '@/components/Buttons';
 import { BottleIcon } from '@/components/Icons';
@@ -17,7 +17,7 @@ const AsideCard = () => {
       <ButtonWrapper>
         <p>Didn&apos;t find what you need?</p>
         <AsideButton
-          onClick={() => changeView('NEW_ITEM')}
+          onClick={() => changeView(AsideView.Item)}
         >
           Add item
         </AsideButton>

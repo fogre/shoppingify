@@ -4,10 +4,9 @@ import { COLORS, QUERIES } from '@/constants';
 
 import UnstyledButton from './UnstyledButton';
 
-interface Props {
-  disabled?: boolean;
-  style: string;
-  children: React.ReactNode
+interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
+  buttonType?: string;
+  children?: React.ReactNode;
 }
 
 const BACKGROUNDCOLOR = {
@@ -17,16 +16,16 @@ const BACKGROUNDCOLOR = {
   white: COLORS.white
 };
 
-const Button: React.FC<props> = ({ style, children, ...props }: Props) => {
+const Button = ({ buttonType, children, ...props }: ButtonProps): JSX.Element => {
   //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const backgroundColor: string = BACKGROUNDCOLOR[style];
+  const backgroundColor: string = BACKGROUNDCOLOR[buttonType];
 
   return (
     <DefaultButton
       style={{
         '--background-color': backgroundColor,
-        '--text-color': style === 'white' ? 'black' : 'white'
-      }}
+        '--text-color': buttonType === 'white' ? 'black' : 'white'
+      } as React.CSSProperties}
       {...props}
     >
       {children}

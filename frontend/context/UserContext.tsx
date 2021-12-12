@@ -19,9 +19,9 @@ interface UserContextIF {
 const parseHistoryByMonths = (historyArray: ShoppingList[]): ParsedHistory => {
   const sorted: ParsedHistory = {};
 
-  for (const history: ShoppingList of historyArray) {
+  for (const history of historyArray) {
     const date = new Date(history.date);
-    const nameDateString: string = date.toLocaleString<string>('default', {
+    const nameDateString: string = date.toLocaleString('default', {
       year: 'numeric', month: 'long'
     });
     const historyDateString: string = date.toLocaleString('default', {
@@ -40,7 +40,7 @@ const parseHistoryByMonths = (historyArray: ShoppingList[]): ParsedHistory => {
   return sorted;
 };
 
-export const UserContext = createContext<UserContextIF>();
+export const UserContext = createContext<UserContextIF | null>(null);
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
 	const { showNotification } = useContext(NotificationContext);

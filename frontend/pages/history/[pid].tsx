@@ -18,11 +18,11 @@ const HistoryItem = () => {
   const { history } = useContext(UserContext);
   const { pid, itemId } = router.query;
 
-  if (!history || !history[pid as keyof history]) {
+  if (!history || !history[pid as string]) {
     return null;
   }
 
-  const historyItem = history[pid as keyof history]
+  const historyItem = history[pid as string]
     .find(h => h.id === itemId);
   
   if (!historyItem) {

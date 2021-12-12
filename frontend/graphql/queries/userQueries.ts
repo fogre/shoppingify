@@ -33,10 +33,12 @@ const USER_HISTORY = /* GraphQL */`
       status
       list {
         category {
+          id
           name
         }
         items {
           item {
+            id
             name
           }
           pcs
@@ -54,6 +56,7 @@ const SHOPPING_LIST_FRAGMENT = /* GraphQL */`
       name
       date
       itemCount
+      status
       list {
         category {
           id

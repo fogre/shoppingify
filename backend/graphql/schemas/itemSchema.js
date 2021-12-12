@@ -18,6 +18,23 @@ const typeDefs = gql`
     image: String
   }
 
+  "Item type in ShoppingLists List with optional category field"
+  type ItemInListItem {
+    id: ID!
+    name: String!
+    category: Category
+    note: String
+    image: String
+  }
+
+  "Item type in Category"
+  type ItemInCategory {
+    id: ID
+    name: String!
+    note: String
+    image: String
+  }
+
   "Input for new Item"
   input ItemInput {
     id: ID

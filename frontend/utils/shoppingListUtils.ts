@@ -1,3 +1,4 @@
+import { NewShoppingList } from '@/context';
 import {
 	Category,
 	List,
@@ -9,9 +10,9 @@ import {
 
 //Helpers to find category and item indexes from a ShoppingList
 interface ListAndIndexesParams {
-  openList: ShoppingList;
-  listItem: ListItem;
-  category: Category;
+  (openList: ShoppingList | NewShoppingList,
+  listItem: ListItem,
+  category: Category): ListAndIndexesReturn;
 }
 
 interface ListAndIndexesReturn {
@@ -20,7 +21,7 @@ interface ListAndIndexesReturn {
   itemIndex: number;
 }
 
-export const listAndIndexes = (openList, listItem, category: ListAndIndexesParams): ListAndIndexesReturn => {
+export const listAndIndexes: ListAndIndexesParams = (openList, listItem, category) => {
   let list: List[] = [];
   let itemIndex = -1;
 
@@ -41,7 +42,7 @@ export const listAndIndexes = (openList, listItem, category: ListAndIndexesParam
 };
 
 //helper to parse shoppinglist before sending it to the server (to ShoppingListInput form)
-export const parseList = (shoppingList: ShoppingList): ShoppingListSaveInput => {
+export const parseList = (shoppingList: ShoppingList | NewShoppingList): ShoppingListSaveInput => {
 	const list: ListInput[] = [];
 	const date = new Date();
 	const dateString = date.toISOString().split('T')[0];
@@ -70,11 +71,11 @@ export const parseList = (shoppingList: ShoppingList): ShoppingListSaveInput => 
 		list.push(newListItem);
 	}
 
-	const newList = {
+	const newList: ShoppingListSaveInput = {
 		...shoppingList,
 		list: list,
 		date: dateString
 	};
-	delete newList.__typename;
+
 	return newList;
 };

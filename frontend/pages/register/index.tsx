@@ -146,7 +146,7 @@ const RegisterPage = () => {
                   }
                 </FieldWrapper>
                 <LoginButton
-                  style='secondary'
+                  buttonType='secondary'
                   type='submit'
                   disabled={!isValid || !dirty}
                 >

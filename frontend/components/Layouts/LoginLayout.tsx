@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { QUERIES } from '@/constants';
 
-const LoginLayout = ({ children }: React.ReactNode) => (
+const LoginLayout = ({ children }: { children: React.ReactNode }) => (
   <Wrapper>
     <Card>
       {children}

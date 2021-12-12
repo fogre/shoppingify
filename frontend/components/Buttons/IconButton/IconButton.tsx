@@ -3,28 +3,29 @@ import UnstyledButton from '../UnstyledButton';
 
 import { BackArrowIcon } from '@/components/Icons';
 
-interface Props {
-  size: number;
-  color: string;
-  background: string;
-  padding: number;
-  radius: number;
-  children: React.ReactNode;
+interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
+  size?: number;
+  color?: string;
+  background?: string;
+  padding?: number;
+  radius?: number;
+  children?: React.ReactNode;
 }
 
-export const IconButton = ({ size, color, background, padding, radius, children, ...delegated }: Props) => (
-  <Button
-    style={{
-      '--size': `${size}px`,
-      '--color': color,
-      '--background': background,
-      '--padding': `${padding}px`,
-      '--radius': `${radius}%`
-    }}
-    {...delegated}
-  >
-    {children}
-  </Button>
+export const IconButton = 
+  ({ size, color, background, padding, radius, children, ...props }: ButtonProps): JSX.Element => (
+    <Button
+      style={{
+        '--size': `${size}px`,
+        '--color': color,
+        '--background': background,
+        '--padding': `${padding}px`,
+        '--radius': `${radius}%`
+      } as React.CSSProperties}
+      {...props}
+    >
+      {children}
+    </Button>
 );
 
 const Button = styled(UnstyledButton)`

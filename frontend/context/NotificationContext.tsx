@@ -11,9 +11,9 @@ interface NotificationContext {
   hideNotification: () => void;
 }
 
-export const NotificationContext = createContext<NotificationContext>();
+export const NotificationContext = createContext<NotificationContext | null>(null);
 
-const NotificationProvider = ({ children }: React.ReactNode) => {
+const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
   const [notification, setNotification] = useState<Notification | null>(null);
 
   useEffect(() => {

@@ -15,7 +15,7 @@ const {
 const typeDefs = gql`
   "Object for an array of most popular Items of an User"
   type TopItem {
-    item: Item!
+    item: ItemInListItem!
     percentage: Float
   }
 

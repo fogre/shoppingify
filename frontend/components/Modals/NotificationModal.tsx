@@ -38,7 +38,7 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const ContentWrapper = styled.div`
+const ContentWrapper = styled('div')<{ type: string }>`
   background-color: ${p => p.type === 'error'
     ? 'var(--color-danger)' : 'var(--color-secondary)'
   };

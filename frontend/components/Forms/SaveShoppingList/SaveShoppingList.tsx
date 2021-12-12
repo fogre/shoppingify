@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { COLORS } from '@/constants';
 import { ShoppingListContext, NotificationContext } from '@/context';
-import { ShoppingListSaveDocument } from '@/graphql/generated';
+import { StatusEnum, ShoppingListSaveDocument } from '@/graphql/generated';
 import { parseList } from '@/utils/shoppingListUtils';
 
 import { Button } from '@/components/Buttons';
@@ -29,7 +29,7 @@ const SaveShoppingListForm = () => {
   const [, saveShoppingList] = useMutation(ShoppingListSaveDocument);
 
   const initialValues: FormValues = {
-    name: openList?.name || ''
+    name: openList?.name  || ''
   };
 
   const handleSubmit = async (name: string) => {
@@ -51,7 +51,7 @@ const SaveShoppingListForm = () => {
 
     if (result.data?.shoppingListSave) {
       changeEditState();
-      changeStatus('SAVED');
+      changeStatus(StatusEnum.Saved);
     }
   };
 
@@ -68,14 +68,14 @@ const SaveShoppingListForm = () => {
         return (
           <StyledForm style={{
             '--color': isValid ? COLORS.primary : COLORS.grey[74]
-          }}>
+          } as React.CSSProperties}>
               <Input
                 id='name'
                 name='name'
                 placeholder='Enter a name'
               />
               <Button
-                style='primary'
+                buttonType='primary'
                 type='submit'
                 disabled={
                   !isValid ||

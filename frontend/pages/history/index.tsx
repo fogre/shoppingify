@@ -105,7 +105,7 @@ const MobileFlexWrapper = styled(FlexWrapper)`
   }
 `;
 
-const StatusText = styled.p`
+const StatusText = styled('p')<{ status: string }>`
   color: ${p => p.status === 'COMPLETED'
     ? COLORS.secondary : COLORS.danger
   };

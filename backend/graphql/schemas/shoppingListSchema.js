@@ -23,7 +23,7 @@ const typeDefs = gql`
   
   "Item and item specific fields for the ShoppingList' list field"
   type ListItem {
-    item: Item!
+    item: ItemInListItem!
     pcs: Int!
     completed: Boolean!
   }

@@ -9,7 +9,7 @@ import { ErrorMessage, FieldWrapper, Label, Input } from '@/components/Forms';
 
 interface CategoryFieldIF {
   catValue: string;
-  setFieldValue: () => void;
+  setFieldValue: (key: string, val: string) => void;
   error: string | undefined;
   touched: boolean;
 }
@@ -36,7 +36,7 @@ const CategoryInput = ({ handleFocus, error, touched }: InputIF) => (
 );
 
 const CategoryField = ({ catValue, setFieldValue, error, touched }: CategoryFieldIF) => {
-  const categoriesListRef = useRef();
+  const categoriesListRef = useRef<HTMLInputElement | undefined>();
   const [result] = useQuery({
     query: CategoriesDocument,
     requestPolicy: 'cache-only'
@@ -44,11 +44,15 @@ const CategoryField = ({ catValue, setFieldValue, error, touched }: CategoryFiel
 
   const handleFocus = () => {
     //eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    categoriesListRef.current.scrollIntoView({ behavior: 'smooth' });
+    categoriesListRef?.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   if (!result.data || !result.data.categories.length) {
-    return <CategoryInput />;
+    return <CategoryInput
+      error={error}
+      touched={touched}
+      handleFocus={handleFocus}
+    />;
   }
 
   //filter the categories by catValue

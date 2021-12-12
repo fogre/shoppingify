@@ -81,7 +81,7 @@ const ItemListWrapper = styled.li`
   }
 `;
 
-const ItemName = styled.p`
+const ItemName = styled('p')<{checked: boolean}>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

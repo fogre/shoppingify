@@ -15,20 +15,20 @@ export const ConfirmationModal = () => {
 
   return (
     <Wrapper
-      isOpen={confirmation}
+      isOpen={confirmation ? true : false}
       onDismiss={closeConfirmationModal}
     >
       <Content aria-label='Confirmation modal'>
         <Message>{confirmation.message}</Message>
         <ActionWrapper>
           <Button
-            style='white'
+            buttonType='white'
             onClick={() => closeConfirmationModal()}
           >
             Cancel
           </Button>
           <Button
-            style='danger'
+            buttonType='danger'
             onClick={() => confirmation.action()}
           >
             Yes

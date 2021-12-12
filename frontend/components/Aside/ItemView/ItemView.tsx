@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { AsideView, AsideContext, NotificationContext, ShoppingListContext } from '@/context';
 import { Item, ItemFindOneDocument } from '@/graphql/generated';
 
+import Centered from '@/components/Centered';
 import { Button, BackIconButton } from '@/components/Buttons';
 import { BottomActions, Scrollable, ScrollContent } from '../LayoutHelpers';
 
@@ -38,11 +39,11 @@ const ItemViewBase = ({ item, changeView, hideAsideView, children }: ItemViewBas
       />
       {children}
       <BottomActions>
-        <Button style={'white'}>
+        <Button buttonType='white'>
           delete
         </Button>
         <Button
-          style={'primary'}
+          buttonType='primary'
           disabled={item ? false : true}
           onClick={() => handleAddToList(item)}
         >
@@ -62,7 +63,13 @@ const ItemView = () => {
   });
 
   if (result.fetching || result.error) {
-    return <ItemViewBase item={null} changeView={changeView} />;
+    return (
+      <ItemViewBase item={null} changeView={changeView}>
+        <Centered>
+          <p>Loading...</p>
+        </Centered>
+      </ItemViewBase>
+    );
   }
 
   const item: Item = result.data.itemFindOne;

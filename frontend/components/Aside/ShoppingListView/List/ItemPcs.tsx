@@ -40,7 +40,7 @@ const ItemPcs = ({ category, listItem, selected }: Props) => {
       <IconButton
         size={24}
         color={'currentColor'}
-        onClick={() => changePcs(-1, listItem, category)}
+        onClick={() => changePcs(listItem, category, -1)}
       >
         <RemoveIcon />
       </IconButton>
@@ -48,7 +48,7 @@ const ItemPcs = ({ category, listItem, selected }: Props) => {
       <IconButton
         size={24}
         color={'currentColor'}
-        onClick={() => changePcs(1, listItem, category)}
+        onClick={() => changePcs(listItem, category, 1)}
       >
         <AddIcon />
       </IconButton>

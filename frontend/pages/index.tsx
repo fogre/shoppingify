@@ -3,7 +3,7 @@ import { useQuery } from 'urql';
 import styled from 'styled-components';
 
 import { COLORS, QUERIES } from '@/constants';
-import { AsideContext, NotificationContext } from '@/context';
+import { AsideView, AsideContext, NotificationContext } from '@/context';
 import { Category, CategoriesDocument } from '@/graphql/generated';
 
 import { getMainLayout } from '@/components/Layouts';
@@ -18,7 +18,7 @@ import {
 
 interface SearchIF {
   searchParams: string;
-  changeSearchParams?: () => void;
+  changeSearchParams?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Header = ({ searchParams, changeSearchParams }: SearchIF) => {
@@ -35,7 +35,6 @@ const Header = ({ searchParams, changeSearchParams }: SearchIF) => {
         </SearchIconWrapper>  
         <Search
           width={250}
-          type='text'
           borderColor={'transparent'}
           placeholder={'Search items'}
           value={searchParams}
@@ -133,7 +132,7 @@ const List = ({ searchParams }: SearchIF) => {
               <CardButton
                 as={UnstyledButton}
                 key={item.id}
-                onClick={() => changeView('ITEM', item.id)}
+                onClick={() => changeView(AsideView.Item, item.id)}
               >
                 <p>{item.name}</p>
                 <Icon

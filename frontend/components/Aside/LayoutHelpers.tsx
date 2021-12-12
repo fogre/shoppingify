@@ -6,7 +6,7 @@ export const BottomActions = ({ grey, children }: { grey?: boolean, children: Re
     </BottomActionsWrapper>
 );
 //--bottom-actions-height is controlled by Aside.tsx
-const BottomActionsWrapper = styled.div`
+const BottomActionsWrapper = styled('div')<{grey?: boolean}>`
   background-color: ${p => p.grey ? 'var(--color-grey-95)' : 'white'};
   width: 100%;
   height: var(--bottom-actions-height);
@@ -33,11 +33,11 @@ const ScrollableWrapper = styled.div`
 `;
 
 export const ScrollContent = (
-  { margin, children }: { margin: number, children: React.ReactNode }
+  { margin, children }: { margin?: number, children: React.ReactNode }
 ) => (
   <ScrollContentWrapper style={{
     '--margin-top': `${margin}px`
-  }}>
+  } as React.CSSProperties}>
     {children}
   </ScrollContentWrapper>
 );

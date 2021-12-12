@@ -11,7 +11,7 @@ interface ConfirmationContextIF {
   closeConfirmationModal: () => void;
 }
 
-export const ConfirmationContext = createContext<ConfirmationContextIF>();
+export const ConfirmationContext = createContext<ConfirmationContextIF | null>(null);
 
 const ConfirmationProvider = ({ children }: { children: React.ReactNode }) => {
   const [confirmation, setConfirmation] = useState<Modal | null>(null);

@@ -57,17 +57,17 @@ const BottomComponent = () => {
   return (
     <>
       <Button
-        style={'white'}
+        buttonType={'white'}
         onClick={() => showConfirmationModal({
           message: 'Are you sure that you want to cancel this list?',
-          action: () => handleFinish('CANCELLED')
+          action: () => handleFinish(StatusEnum.Cancelled)
         })}
       >
         cancel
       </Button>
       <Button
-        style={'secondary'}
-        onClick={()=> handleFinish('COMPLETED')}
+        buttonType={'secondary'}
+        onClick={()=> handleFinish(StatusEnum.Completed)}
       >
         complete
       </Button>

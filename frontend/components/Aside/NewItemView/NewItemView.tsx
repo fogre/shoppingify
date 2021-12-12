@@ -3,7 +3,7 @@ import { useMutation } from 'urql';
 import { Formik, Form } from 'formik';
 import styled from 'styled-components';
 
-import { AsideContext, NotificationContext } from '@/context';
+import { AsideView, AsideContext, NotificationContext } from '@/context';
 import { ItemAddOneDocument } from '@/graphql/generated';
 
 import { Button } from '@/components/Buttons';
@@ -57,7 +57,7 @@ const NewItemView = () => {
         message: res.error.message
       });
     } else {
-      changeView('SHOPPING_LIST');
+      changeView(AsideView.List);
     }
   };
 
@@ -109,14 +109,14 @@ const NewItemView = () => {
               </ScrollContent>
               <BottomActions grey={true}>
                 <Button
-                  style='white'
-                  onClick={() => changeView('SHOPPING_LIST')}
+                  buttonType='white'
+                  onClick={() => changeView(AsideView.List)}
                 >
                   cancel
                 </Button>
                 <Button
                   disabled={!isValid}
-                  style='primary'
+                  buttonType='primary'
                   type='submit'
                 >
                   Add item

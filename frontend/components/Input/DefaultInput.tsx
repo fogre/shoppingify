@@ -1,18 +1,17 @@
 import styled from 'styled-components';
 
-interface props {
+interface InputProps extends React.ComponentPropsWithoutRef<'input'> {
   borderColor: string;
   width: number
 }
 
-const Input = ({ borderColor, width, ...delegated }: props) => (
+const Input = ({ borderColor, width, ...props }: InputProps): JSX.Element => (
   <StyledInput
-    type='text'
     style={{
       '--borderColor': borderColor,
       '--width': `${width}px`
-    }}
-    {...delegated}
+    } as React.CSSProperties}
+    {...props}
   />
 );
 

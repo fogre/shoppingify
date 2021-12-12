@@ -38,7 +38,7 @@ const Aside = () => {
   return (
     <Wrapper
       style={{
-        '--background-color': backgroundColor
+        backgroundColor
       }}>
       <ComponentToView />
     </Wrapper>
@@ -48,7 +48,6 @@ const Aside = () => {
 const Wrapper = styled.div`
   --bottom-actions-height: 130px; ${/*height of container at the bottom of Aside*/''}
   height: 100%;
-  background-color: var(--background-color, inherit);
 `;
 
 export default Aside;

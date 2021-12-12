@@ -2,11 +2,11 @@ import { useContext } from 'react';
 import styled from 'styled-components';
 
 import { COLORS } from '@/constants';
-import { AsideContext, ShoppingListContext } from '@/context';
+import { AsideView, AsideContext, ShoppingListContext } from '@/context';
 
 import MiddleActions from './MiddleActions';
-import { IconButton } from '/components/Buttons';
-import { CartIcon, LogoIcon } from '/components/Icons';
+import { IconButton } from '@/components/Buttons';
+import { CartIcon, LogoIcon } from '@/components/Icons';
 
 
 const ItemCount = () => {
@@ -41,7 +41,7 @@ const Navigation = () => {
     <Wrapper>
       <IconButton size={42}>
         <LogoIcon
-          onClick={() => changeView('USER')}
+          onClick={() => changeView(AsideView.User)}
         />
       </IconButton>
 
@@ -54,7 +54,7 @@ const Navigation = () => {
           size={22}
           padding={10}
           color={'white'}
-          onClick={() => changeView('SHOPPING_LIST')}
+          onClick={() => changeView(AsideView.List)}
         >
           <CartIcon />
           <ItemCount />

@@ -6,12 +6,12 @@ import styled from 'styled-components';
 import { COLORS, QUERIES } from '@/constants';
 import { AsideContext } from '@/context';
 
-import { IconButton } from '/components/Buttons';
+import { IconButton } from '@/components/Buttons';
 import {
   HistoryIcon,
   ListIcon,
   StatsIcon
-} from '/components/Icons';
+} from '@/components/Icons';
 
 const MiddleActions = () => {
   const router = useRouter();
@@ -93,7 +93,7 @@ const LinkWrapper = styled.div`
   position: relative;
 `;
 
-const BorderThing = styled.div`
+const BorderThing = styled('div')<{ visible: boolean }>`
   display: ${p => p.visible ? 'block' : 'none'};
   width: 6px;
   height: 140%;

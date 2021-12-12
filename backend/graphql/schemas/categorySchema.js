@@ -9,7 +9,7 @@ const typeDefs = gql`
   type Category {
     id: ID!
     name: String!
-    items: [Item]
+    items: [ItemInCategory]
   }
 
   input CategoryInput {

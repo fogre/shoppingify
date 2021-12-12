@@ -21,9 +21,9 @@ import SearchIcon from '../../assets/search.svg';
 import StatsIcon from '../../assets/stats.svg';
 
 interface props {
-  fill: string;
-  size: number;
-  justifySelf: string;
+  fill?: string;
+  size?: number;
+  justifySelf?: string;
   children: React.ReactNode
 }
 
@@ -33,7 +33,7 @@ const Icon = ({ fill, size, justifySelf, children }: props) => (
       '--fill': fill,
       '--size': `${size}px`,
       '--justify-self': justifySelf
-    }}
+    } as React.CSSProperties}
   >
     {children}
   </IconWrapper>  

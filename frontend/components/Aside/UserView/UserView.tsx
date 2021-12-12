@@ -4,7 +4,7 @@ import { useQuery } from 'urql';
 import styled from 'styled-components';
 
 import { UserDocument } from '@/graphql/generated';
-import { AsideContext, NotificationContext } from '@/context';
+import { AsideView, AsideContext, NotificationContext } from '@/context';
 import { removeToken } from '@/utils/tokenUtils';
 
 import { Button, BackIconButton } from '@/components/Buttons';
@@ -21,7 +21,7 @@ const UserView = () => {
   });
 
   const handleClick = () => {
-    changeView('SHOPPING_LIST');
+    changeView(AsideView.List);
     hideAsideView();
   };
 
@@ -62,7 +62,7 @@ const UserView = () => {
         </TextWrapper>
         <BottomActions>
           <Button
-            style='secondary'
+            buttonType='secondary'
             onClick={() => handleLogout()}
           >
             Logout

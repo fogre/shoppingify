@@ -7,33 +7,42 @@ import {
   List,
   ListItem,
   Item,
+  ItemInListItem,
   ShoppingList,
   StatusEnum,
   UserDocument
 } from '@/graphql/generated';
 
+export interface NewShoppingList {
+  name: string;
+  list: List[];
+  itemCount?: number;
+  Date?: string;
+  status?: StatusEnum;
+}
+
 interface ChangeListProps {
-  listItem: ListItem;
-  category: Category;
-  amount?: number;
+  (listItem: ListItem,
+  category: Category,
+  amount?: number): void;
 }
 
 interface ListContext {
-  openList: ShoppingList,
+  openList: ShoppingList | NewShoppingList,
   editState: boolean;
-  addItem: (item: Item) => void;
+  addItem: (item: Item | ItemInListItem) => void;
   changeEditState: () => void;
-  changeCompleted: (item, category: ChangeListProps) => void;
-  changePcs: (amount, item, category: ChangeListProps) => void;
+  changeCompleted: (item: ListItem, category: Category) => void;
+  changePcs: (item: ListItem, category: Category, amount: number) => void;
   changeStatus: (status: StatusEnum) => void;
-  removeItem: (item, category: ChangeListProps) => void;
+  removeItem: (item: ListItem, category: Category) => void;
 }
 
 /*Context, actions and provider*/
-export const ShoppingListContext = createContext<ListContext>();
+export const ShoppingListContext = createContext<ListContext | null>(null);
 
 const ShoppingListProvider = ({ children }: { children: React.ReactNode }) => {
-  const [openList, setOpenList] = useState<ShoppingList | null>();
+  const [openList, setOpenList] = useState<ShoppingList | NewShoppingList | null>();
   const [editState, setEditState] = useState<boolean>(true);
 
   const [result] = useQuery({
@@ -53,7 +62,7 @@ const ShoppingListProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [result]);
 
-  const addItem = (item: Item) => {
+  const addItem = (item: ItemInListItem) => {
     const newItem: ListItem = {
       completed: false,
       pcs: 1,
@@ -80,7 +89,7 @@ const ShoppingListProvider = ({ children }: { children: React.ReactNode }) => {
     setOpenList({ ...openList, list, itemCount });
   };
 
-  const changeCompleted = (listItem, category: ChangeListProps) => {
+  const changeCompleted: ChangeListProps = (listItem, category) => {
     const { list, categoryIndex, itemIndex } = listAndIndexes(openList, listItem, category);
 
     if (itemIndex < 0) {
@@ -95,7 +104,7 @@ const ShoppingListProvider = ({ children }: { children: React.ReactNode }) => {
     setEditState(!editState);
   };
 
-  const changePcs = (amount, listItem, category: ChangeListProps) => {
+  const changePcs: ChangeListProps = (listItem, category, amount) => {
     //eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     if ((listItem.pcs + amount) < 1) { //items pcs should never be < 1
       return;
@@ -117,7 +126,7 @@ const ShoppingListProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
-  const removeItem = (listItem, category: ChangeListProps) => {
+  const removeItem: ChangeListProps = (listItem, category) => {
     const { list, categoryIndex, itemIndex } = listAndIndexes(openList, listItem, category);
 
     if (itemIndex < 0) {
@@ -148,7 +157,6 @@ const ShoppingListProvider = ({ children }: { children: React.ReactNode }) => {
       changePcs,
       changeStatus,
       editState,
-      openList,
       openList,
       removeItem
     }}>

@@ -6,8 +6,6 @@ const CATEGORIES = /* GraphQL */`
 	    items {
 	      id
 	      name
-	      note
-	      image
 	    }
 	  }
 	}

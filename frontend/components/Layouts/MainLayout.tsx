@@ -13,7 +13,7 @@ import Aside from '@/components/Aside';
 import { ConfirmationModal } from '@/components/Modals';
 import Navigation from '@/components/Navigation';
 
-const MainLayout = ({ children }: React.ReactNode) => {
+const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   //If not logged in push to login page
@@ -41,7 +41,7 @@ const MainLayout = ({ children }: React.ReactNode) => {
   );
 };
 
-const LayoutGrid = ({ children }: React.ReactNode) => {
+const LayoutGrid = ({ children }: { children: React.ReactNode }) => {
   const { showAsideView } = useContext(AsideContext);
 
   return (
@@ -115,7 +115,7 @@ const MainGridWrapper = styled.main`
   max-height: 100%;
 `;
 
-const AsideGridWrapper = styled.aside`
+const AsideGridWrapper = styled('aside')<{ show: boolean }>`
   grid-area: 'aside';
   position: sticky;
   top: 0;

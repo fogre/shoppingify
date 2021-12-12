@@ -19,7 +19,7 @@ import Centered from '@/components/Centered';
 interface TopField {
   name: string;
   percentage: number;
-  type: string;
+  type?: string;
 }
 
 const TopField = ({ name, percentage, type }: TopField) => {
@@ -34,14 +34,14 @@ const TopField = ({ name, percentage, type }: TopField) => {
       <ProgressBarWrapper
         role='progressbar'
         aria-valuenow={parsedVal}
-        aria-valuemin='0'
-        aria-valuemax='100'
+        aria-valuemin={0}
+        aria-valuemax={100}
       >
         <Bar style={{
           '--width': `${parsedVal}%`,
           '--color': `${type === 'primary'
             ? COLORS.primary : COLORS.secondary}`
-        }} />
+        } as React.CSSProperties} />
       </ProgressBarWrapper>
     </TopFieldWrapper>
   );
@@ -81,7 +81,7 @@ const Bar = styled.div`
 const MonthlyChart = ({ summary }: { summary: MonthlySummary[] }) => {
   const parsedSummary: MonthlySummary[] = summary.slice(0, 7).reverse().map(s => {
     const date = new Date(s.month);
-    const monthString = date.toLocaleString<string>('default', {
+    const monthString = date.toLocaleString('default', {
       month: 'long'
     });
     return {
