@@ -17,7 +17,7 @@ const AsideCard = () => {
       <ButtonWrapper>
         <p>Didn&apos;t find what you need?</p>
         <AsideButton
-          onClick={() => changeView(AsideView.Item)}
+          onClick={() => changeView(AsideView.NewItem)}
         >
           Add item
         </AsideButton>
