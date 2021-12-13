@@ -6,6 +6,8 @@ The server runs on Apollo-Server-Express and uses Mongoose schemas for the in cl
 
 Testing uses jest, mongodb-memory-server to run the DB in memory, and apollo-server-integration-testing to mock HTTP headers for the GraphQL server.
 
+[Server running on Heroku](https://stormy-everglades-82986.herokuapp.com/)
+
 ## How to install
 * Clone the repository
 * Create an account for the cloud DB in [MongoDB](https://www.mongodb.com/) and create a new cluster
