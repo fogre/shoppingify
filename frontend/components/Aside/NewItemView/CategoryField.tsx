@@ -36,15 +36,18 @@ const CategoryInput = ({ handleFocus, error, touched }: InputIF) => (
 );
 
 const CategoryField = ({ catValue, setFieldValue, error, touched }: CategoryFieldIF) => {
-  const categoriesListRef = useRef<HTMLInputElement | undefined>();
+  const scrollRef = useRef<HTMLDivElement | undefined>();
   const [result] = useQuery({
-    query: CategoriesDocument,
-    requestPolicy: 'cache-only'
+    query: CategoriesDocument
   });
 
   const handleFocus = () => {
-    //eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    categoriesListRef?.current?.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => {
+      scrollRef?.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }, 500);
   };
 
   if (!result.data || !result.data.categories.length) {
@@ -77,6 +80,7 @@ const CategoryField = ({ catValue, setFieldValue, error, touched }: CategoryFiel
 
   return(
     <CategoryFieldWrapper>
+      <div ref={scrollRef} />
       <CategoryInput
         error={error}
         touched={touched}
@@ -88,11 +92,12 @@ const CategoryField = ({ catValue, setFieldValue, error, touched }: CategoryFiel
             key={c.name}
             onClick={() => setFieldValue('category', c.name)}
           >
-            {c.name}
+            <p>
+              {c.name}
+            </p>
           </CategoryButton>
         )}
       </CategoriesList>}
-      <div ref={categoriesListRef} />
     </CategoryFieldWrapper>
   );
 };

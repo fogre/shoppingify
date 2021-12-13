@@ -9,9 +9,10 @@ import {
 } from 'recharts';
 import styled from 'styled-components';
 
-import { COLORS } from '@/constants';
+import { COLORS, BREAKPOINTS, QUERIES } from '@/constants';
 import { UserContext } from '@/context';
 import { MonthlySummary, TopItem, TopCategory } from '@/graphql/generated';
+import { isServerSide } from '@/utils/tokenUtils';
 
 import { getMainLayout } from '@/components/Layouts';
 import Centered from '@/components/Centered';
@@ -81,8 +82,13 @@ const Bar = styled.div`
 const MonthlyChart = ({ summary }: { summary: MonthlySummary[] }) => {
   const parsedSummary: MonthlySummary[] = summary.slice(0, 7).reverse().map(s => {
     const date = new Date(s.month);
+    let monthLegth;
+    if (!isServerSide) {
+      monthLegth = window.innerWidth > BREAKPOINTS.tabletMin ? 'long' : 'short';
+    }
     const monthString = date.toLocaleString('default', {
-      month: 'long'
+      //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      month: monthLegth || 'short'
     });
     return {
       ...s,
@@ -91,22 +97,36 @@ const MonthlyChart = ({ summary }: { summary: MonthlySummary[] }) => {
   });
 
   return (
-    <ResponsiveContainer
-      width='100%'
-      height={300}
-    >
-      <LineChart
-        data={parsedSummary}
-        margin={{ top: 5, left: 0, right: 0, bottom: 5 }}
+    <ChartWrapper>
+      <ResponsiveContainer
+        width='100%'
+        height={300}
       >
-        <Line type='monotone' dataKey='itemCount' stroke={COLORS.primary} />
-        <CartesianGrid stroke='#ccc' strokeDasharray='3 3'/>
-        <XAxis dataKey='month' />
-        <YAxis />
-      </LineChart>
-    </ResponsiveContainer>  
+        <LineChart
+          data={parsedSummary}
+          margin={{ top: 5, left: 0, right: 0, bottom: 5 }}
+        >
+          <Line type='monotone' dataKey='itemCount' stroke={COLORS.primary} />
+          <CartesianGrid stroke='#ccc' strokeDasharray='3 3'/>
+          <XAxis dataKey='month' />
+          <YAxis />
+        </LineChart>
+      </ResponsiveContainer>
+    </ChartWrapper>  
   );
 };
+
+const ChartWrapper = styled.div`
+  margin-left: calc(var(--padding-main) * -1);
+
+  @media ${QUERIES.tablet} {
+    margin-left: calc(var(--padding-main) * -1.5);
+  }
+
+  @media ${QUERIES.mobile} {
+    margin-left: calc(var(--padding-main) * -2.5);
+  }
+`;
 
 const StatisticsPage = () => {
   const { statistics } = useContext(UserContext);

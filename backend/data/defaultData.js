@@ -2,7 +2,6 @@
 const defaultCategoriesAndItems = {
   'Fruits and vegetables': [
     {
-      cat: 0,
       name: 'Avocado',
       note: 'The fruit of the plant, also called an avocado, is botanically a large berry containing a single large seed.'
     },
@@ -17,12 +16,12 @@ const defaultCategoriesAndItems = {
     {
       name: 'Cucumber',
       note: 'Cucumber is a widely-cultivated creeping vine plant in the Cucurbitaceae gourd family that bears cucumiform fruits, which are used as vegetables. There are three main varieties of cucumber—slicing, pickling, and burpless/seedless—within which several cultivars have been created.',
-      image: 'https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F9%2F96%2FARS_cucumber.jpg%2F223px-ARS_cucumber.jpg&sp=1623913572T0e912f1fec93f50bb1da240f50696cf41532327e4f7523c8ca7b2946ef41b123'
+      image: 'https://i.imgur.com/xUXhFSH.jpeg'
     },
     {
       name: 'Strawberry',
       note: 'The garden strawberry is a widely grown hybrid species of the genus Fragaria, collectively known as the strawberries, which are cultivated worldwide for their fruit. The fruit is widely appreciated for its characteristic aroma, bright red color, juicy texture, and sweetness.',
-      image: 'https://en.wikipedia.org/wiki/Strawberry#/media/File:Garden_strawberry_(Fragaria_%C3%97_ananassa)_single.jpg'
+      image: 'https://i.imgur.com/EZH6bad.jpeg'
     },
   ],
   'Meat and poultry': [
@@ -37,13 +36,18 @@ const defaultCategoriesAndItems = {
     },
     {
       name: 'Kebab',
-      note: 'Turkish meat stick'
+      note: 'Turkish meat stick',
+      image: 'https://i.imgur.com/TgpbNVU.gif'
     },
   ],
   'Beverages': [
     {
       name: 'Soda',
       note: 'Soda is a bubbly drink known for its static taste'
+    },
+    {
+      name: 'Beer',
+      note: 'Just a basic beer'
     },
     {
       name: 'Apple Juice',

@@ -40,11 +40,10 @@ const validateForm = (values: ValuesIF) => {
 const NewItemView = () => {
   const { changeView } = useContext(AsideContext);
   const { showNotification } = useContext(NotificationContext);
-
-  const [, addItem] = useMutation(ItemAddOneDocument);
+  const [, addItemMutation] = useMutation(ItemAddOneDocument);
 
   const handleSubmit = async (values: ValuesIF) => {
-    const res = await addItem({ input: {
+    const res = await addItemMutation({ input: {
       ...values,
       category: {
         name: values.category
@@ -57,6 +56,10 @@ const NewItemView = () => {
         message: res.error.message
       });
     } else {
+      showNotification({
+        type: 'success',
+        message: `${values.name} added.`
+      });
       changeView(AsideView.List);
     }
   };
@@ -106,22 +109,22 @@ const NewItemView = () => {
                   catValue={values.category}
                   setFieldValue={setFieldValue}
                 />
+                <BottomActions grey={true}>
+                  <Button
+                    buttonType='white'
+                    onClick={() => changeView(AsideView.List)}
+                  >
+                    cancel
+                  </Button>
+                  <Button
+                    disabled={!isValid}
+                    buttonType='primary'
+                    type='submit'
+                  >
+                    Add item
+                  </Button>
+                </BottomActions>
               </ScrollContent>
-              <BottomActions grey={true}>
-                <Button
-                  buttonType='white'
-                  onClick={() => changeView(AsideView.List)}
-                >
-                  cancel
-                </Button>
-                <Button
-                  disabled={!isValid}
-                  buttonType='primary'
-                  type='submit'
-                >
-                  Add item
-                </Button>
-              </BottomActions>
             </StyledForm>
           );
         }}
@@ -133,5 +136,6 @@ const NewItemView = () => {
 const StyledForm = styled(Form)`
   margin-top: 30px;
 `;
+
 
 export default NewItemView;

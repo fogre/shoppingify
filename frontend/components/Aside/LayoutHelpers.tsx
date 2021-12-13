@@ -12,7 +12,7 @@ const BottomActionsWrapper = styled('div')<{grey?: boolean}>`
   height: var(--bottom-actions-height);
   position: absolute;
   left: 0;
-  bottom: 0px;
+  bottom: 0;
   display: flex;
   justify-content: space-evenly;
   align-items: center;

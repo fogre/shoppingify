@@ -25,7 +25,12 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
     <GlobalStylesWrapper>
       <Head>
         <title>Shoppingify</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="viewport" content="initial-scale=1.0,
+          height=device-height,
+          minimum-scale=1,
+          width=device-width,
+          maximum-scale=1"
+        />
       </Head>
       <NotificationProvider>
         {getLayout(<Component {...pageProps} />)}

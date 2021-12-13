@@ -114,6 +114,7 @@ const StatusText = styled('p')<{ status: string }>`
   text-transform: lowercase;
   padding: 2px 7px;
   margin: 0;
+  text-align: center;
 `;
 
 export default HistoryPage;

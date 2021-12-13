@@ -42,7 +42,7 @@ const CheckBoxWrapper = styled.div`
 `;
 
 const SingleItem = ({ listItem, category }: ListItemProps) => {
-  const [selected, setSelected] = useState<boolean>(false);
+  const [selected, setSelected] = useState<boolean>(true);
   const { editState } = useContext(ShoppingListContext);
 
   return (

@@ -49,6 +49,7 @@ const Wrapper = styled(DialogOverlay)`
   width: 100%;
   height: 100%;
   background: hsla(220, 5%, 40%, 0.8);
+  z-index: 3;
 `;
 
 const Content = styled(DialogContent)`

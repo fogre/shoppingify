@@ -31,11 +31,12 @@ const ItemPcs = ({ category, listItem, selected }: Props) => {
   return (
     <PcsSelectedWrapper>
       <RemoveButton
+        size={18}
         color={'white'}
         padding={10}
         onClick={() => removeItem(listItem, category)}
       >
-        <DeleteIcon />
+        <DeleteIcon/>
       </RemoveButton>
       <IconButton
         size={24}
@@ -60,6 +61,7 @@ const RemoveButton = styled(IconButton)`
   background-color: var(--color-primary);
   border-radius: var(--radius-normal);
   height: 100%;
+  width: 100%;
 `;
 
 const PcsWrapper = styled.div`
@@ -85,6 +87,7 @@ const PcsSelectedWrapper = styled.div`
   gap: 7px;
   padding-right: 5px;
   height: 100%;
+  width: max-content;
 `;
 
 export default ItemPcs;

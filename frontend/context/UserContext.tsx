@@ -51,6 +51,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 	});
 
 	useEffect(() => {
+    console.log('USER QUERY CALLED');
 		if (result.data?.user) {
 			const user = result.data.user;
 			setHistory(parseHistoryByMonths(user.history));

@@ -20,11 +20,15 @@ const ItemViewBase = ({ item, changeView, hideAsideView, children }: ItemViewBas
   const { addItem } = useContext(ShoppingListContext);
   const { showNotification } = useContext(NotificationContext);
 
+  const handleClick = () => {
+    changeView(AsideView.List);
+    hideAsideView();
+  };
+
   const handleAddToList = (item: Item): void => {
     if (item) {
       addItem(item);
-      changeView(AsideView.List);
-      hideAsideView();
+      handleClick();
       showNotification({
         type: 'success',
         message: 'Item added.'
@@ -35,7 +39,7 @@ const ItemViewBase = ({ item, changeView, hideAsideView, children }: ItemViewBas
   return (
     <Scrollable>
       <BackIconButton
-        onClick={() => changeView(AsideView.List)}
+        onClick={() => handleClick()}
       />
       {children}
       <BottomActions>
