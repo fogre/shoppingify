@@ -73,6 +73,30 @@ describe('An Item can', () => {
       .toBeTruthy()
   })
 
+  it('be created with valid image url', async () => {
+    const res = await itemAddOne({
+      ...newDefaultItem,
+      image: 'https://i.imgur.com/hVFcyrj.jpeg',
+      category: { name: categories[1].name }
+    })
+    expect(res.data.itemAddOne).toBeFalsy()
+    expect(res.errors).toBeTruthy()
+    expect(res.errors[0].message.includes('Invalid Imgur image url'))
+      .toBeTruthy()
+  })
+
+  it('not be created with invalid image url', async () => {
+    const res = await itemAddOne({
+      ...newDefaultItem,
+      image: 'https://fake.com/wrongurl',
+      category: { name: categories[1].name }
+    })
+    expect(res.data.itemAddOne).toBeFalsy()
+    expect(res.errors).toBeTruthy()
+    expect(res.errors[0].message.includes('Invalid Imgur image url'))
+      .toBeTruthy()
+  })
+
   it('be queried from the server and the response populates categories', async () => {
     let res = await testClient.query(ITEMS)
     expect(res.errors).toBeFalsy()

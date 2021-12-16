@@ -5,10 +5,16 @@ import styled from 'styled-components';
 import { Category, CategoriesDocument } from '@/graphql/generated';
 
 import { UnstyledButton } from '@/components/Buttons';
-import { ErrorMessage, FieldWrapper, Label, Input } from '@/components/Forms';
+import {
+  ErrorMessage,
+  FieldWrapper,
+  handleFocus,
+  Label,
+  Input
+} from '@/components/Forms';
 
 interface CategoryFieldIF {
-  catValue: string;
+  catValue: string; //value of the category input
   setFieldValue: (key: string, val: string) => void;
   error: string | undefined;
   touched: boolean;
@@ -17,44 +23,36 @@ interface CategoryFieldIF {
 interface InputIF {
   error: string | undefined;
   touched: boolean;
-  handleFocus: () => void;
 }
 
-const CategoryInput = ({ handleFocus, error, touched }: InputIF) => (
-  <FieldWrapper>
-    <Label>Category</Label>
-    <Input
-      id='category'
-      name='category'
-      placeholder='Enter a category'
-      onFocus={() => handleFocus()}
-    />
-    {error && touched &&
-      <ErrorMessage>{error}</ErrorMessage>
-    }
-  </FieldWrapper>
-);
+const CategoryInput = ({ error, touched }: InputIF) => {
+  const categoryRef = useRef<HTMLDivElement | undefined>();
+
+  return (
+    <FieldWrapper ref={categoryRef}>
+      <Label>Category</Label>
+      <Input
+        id='category'
+        name='category'
+        placeholder='Enter a category'
+        onFocus={() => handleFocus(categoryRef?.current)}
+      />
+      {error && touched &&
+        <ErrorMessage>{error}</ErrorMessage>
+      }
+    </FieldWrapper>
+  );
+};
 
 const CategoryField = ({ catValue, setFieldValue, error, touched }: CategoryFieldIF) => {
-  const scrollRef = useRef<HTMLDivElement | undefined>();
   const [result] = useQuery({
     query: CategoriesDocument
   });
-
-  const handleFocus = () => {
-    setTimeout(() => {
-      scrollRef?.current?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    }, 500);
-  };
 
   if (!result.data || !result.data.categories.length) {
     return <CategoryInput
       error={error}
       touched={touched}
-      handleFocus={handleFocus}
     />;
   }
 
@@ -62,7 +60,7 @@ const CategoryField = ({ catValue, setFieldValue, error, touched }: CategoryFiel
   let filtered: Category[] = [];
   if (catValue.length) {
     for (const cat of result.data.categories) {
-      //if catVal is exactly the name of a category, dont't show list
+      //if catVal is the name of a category, dont't show list
       const nameLowerCase = cat.name.toLowerCase();
       const valueLowerCase = catValue.toLowerCase();
       if (nameLowerCase === valueLowerCase) {
@@ -80,17 +78,16 @@ const CategoryField = ({ catValue, setFieldValue, error, touched }: CategoryFiel
 
   return(
     <CategoryFieldWrapper>
-      <div ref={scrollRef} />
       <CategoryInput
         error={error}
         touched={touched}
-        handleFocus={handleFocus}
       />
       {showList && <CategoriesList>
         {filtered.map(c =>
           <CategoryButton
+            type='button'
             key={c.name}
-            onClick={() => setFieldValue('category', c.name)}
+            onFocus={() => setFieldValue('category', c.name)}
           >
             <p>
               {c.name}
@@ -111,6 +108,10 @@ const CategoriesList = styled.div`
   border: 1px solid var(--color-grey-74);
   padding: 7px;
   display: none;
+
+  &:focus {
+    border-color: pink;
+  }
 
   ${CategoryFieldWrapper}:focus-within & {
     display: block;

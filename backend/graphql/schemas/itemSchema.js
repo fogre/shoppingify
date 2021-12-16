@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express')
+const { gql, UserInputError } = require('apollo-server-express')
 //models
 const Category = require('../../models/category')
 const Item = require('../../models/item')
@@ -90,6 +90,17 @@ const itemResolvers = {
           category = await new Category({
             name: input.category.name
           }).save()
+        }
+
+        if (input.image) {
+          try {
+            const hostName = new URL(values.image).hostname;
+            if (hostName !== 'i.imgur.com') {
+              throw new UserInputError('Invalid Imgur image url')
+            }
+          } catch (e) {
+            throw new UserInputError('Invalid Imgur image url')
+          }
         }
 
         const newItem = await new Item({

@@ -9,6 +9,7 @@ export const ErrorMessage = styled.p`
   text-align: center;
   margin-top: 6px;
 `;
+
 export const FieldWrapper = styled.div`
   margin-bottom: 18px;
 
@@ -16,6 +17,16 @@ export const FieldWrapper = styled.div`
     color: var(--color-primary);
   }
 `;
+
+export const handleFocus = (ref: HTMLDivElement | undefined) => {
+  //a hack to wait for the mobile keyboard to pop up and only after that focus
+  setTimeout(() => {
+    ref?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }, 500);
+};
 
 export const Input = styled(Field)`
   border: 2px solid;
@@ -57,4 +68,11 @@ export const LoginStyledForm = styled(Form)`
 export const LoginButton = styled(Button)`
   padding: 10px 16px;
   background-color: var(--color-secondary);
+`;
+
+export const TextArea = styled(Input).attrs(() => ({
+  as: 'textarea'
+}))`
+  height: 10ch;
+  resize: none;
 `;

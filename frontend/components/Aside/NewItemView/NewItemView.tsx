@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import { useMutation } from 'urql';
 import { Formik, Form } from 'formik';
 import styled from 'styled-components';
@@ -7,7 +7,14 @@ import { AsideView, AsideContext, NotificationContext } from '@/context';
 import { ItemAddOneDocument } from '@/graphql/generated';
 
 import { Button } from '@/components/Buttons';
-import { ErrorMessage, FieldWrapper, Label, Input } from '@/components/Forms';
+import {
+  ErrorMessage,
+  FieldWrapper,
+  handleFocus,
+  Input,
+  Label,
+  TextArea
+} from '@/components/Forms';
 import CategoryField from './CategoryField';
 import { BottomActions, Scrollable, ScrollContent } from '../LayoutHelpers';
 
@@ -31,6 +38,17 @@ const validateForm = (values: ValuesIF) => {
   if (!values.name.length) {
     errors.name = 'Name is required';
   }
+  if (values.image) {
+    const eMessage = 'Enter valid Imgur image url, i.e https://i.imgur.com/...';
+    try {
+      const hostName = new URL(values.image).hostname;
+      if (hostName !== 'i.imgur.com') {
+        errors.image = eMessage;
+      }
+    } catch (e) {
+      errors.image = eMessage;
+    }
+  }
   if (!values.category.length) {
     errors.category = "Category is required";
   }
@@ -41,6 +59,8 @@ const NewItemView = () => {
   const { changeView } = useContext(AsideContext);
   const { showNotification } = useContext(NotificationContext);
   const [, addItemMutation] = useMutation(ItemAddOneDocument);
+  const noteRef = useRef<HTMLDivElement | undefined>();
+  const imageRef = useRef<HTMLDivElement | undefined>();
 
   const handleSubmit = async (values: ValuesIF) => {
     const res = await addItemMutation({ input: {
@@ -87,21 +107,26 @@ const NewItemView = () => {
                     <ErrorMessage>{errors.name}</ErrorMessage>
                   }
                 </FieldWrapper>
-                <FieldWrapper>
+                <FieldWrapper ref={noteRef}>
                   <Label>Note (optional)</Label>
-                  <Input
+                  <TextArea
                     id='note'
                     name='note'
                     placeholder='Enter a note'
+                    onFocus={() => handleFocus(noteRef?.current)}
                   />
                 </FieldWrapper>
-                <FieldWrapper>
-                  <Label>Image (optional)</Label>
+                <FieldWrapper ref={imageRef}>
+                  <Label>Image url (optional)</Label>
                   <Input
                     id='image'
                     name='image'
-                    placeholder='Enter a image'
+                    placeholder='Enter Imgur url'
+                    onFocus={() => handleFocus(imageRef?.current)}
                   />
+                  {errors.image && touched.image &&
+                    <ErrorMessage>{errors.image}</ErrorMessage>
+                  }
                 </FieldWrapper>
                 <CategoryField
                   touched={touched.category}
