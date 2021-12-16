@@ -94,12 +94,11 @@ const itemResolvers = {
 
         if (input.image) {
           try {
-            const hostName = new URL(values.image).hostname;
+            const hostName = new URL(input.image).hostname;
             if (hostName !== 'i.imgur.com') {
               throw new UserInputError('Invalid Imgur image url')
             }
           } catch (e) {
-            console.log(e)
             throw new UserInputError('Invalid Imgur image url')
           }
         }
