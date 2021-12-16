@@ -99,6 +99,7 @@ const itemResolvers = {
               throw new UserInputError('Invalid Imgur image url')
             }
           } catch (e) {
+            console.log(e)
             throw new UserInputError('Invalid Imgur image url')
           }
         }
