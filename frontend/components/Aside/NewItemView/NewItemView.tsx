@@ -1,6 +1,6 @@
 import { useContext, useRef } from 'react';
 import { useMutation } from 'urql';
-import { Formik, Form } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import styled from 'styled-components';
 
 import { AsideView, AsideContext, NotificationContext } from '@/context';
@@ -52,6 +52,7 @@ const validateForm = (values: ValuesIF) => {
   if (!values.category.length) {
     errors.category = "Category is required";
   }
+  console.log(values);
   return errors;
 };
 
@@ -109,7 +110,8 @@ const NewItemView = () => {
                 </FieldWrapper>
                 <FieldWrapper ref={noteRef}>
                   <Label>Note (optional)</Label>
-                  <TextArea
+                  <Field
+                    as={TextArea}
                     id='note'
                     name='note'
                     placeholder='Enter a note'

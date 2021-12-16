@@ -62,6 +62,11 @@ const LoginPage = () => {
 
   const handleSubmit = async (values: ValuesIF) => {
     try {
+      showNotification({
+        type: 'success',
+        message: 'Logging in...'
+      });
+      
       const result = await logInMutation(values);
 
       if (result.error) {

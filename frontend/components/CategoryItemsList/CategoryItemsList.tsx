@@ -42,7 +42,7 @@ export const ItemCard = styled.div`
   grid-template-columns: 1fr 0.35fr;
   height: min-content;
 
-  @media ${QUERIES.mobile} {
+  @media ${QUERIES.tablet} {
     grid-template-columns: 1fr 0.5fr;
     padding: 13px 14px;
     font-size: var(--font-small);
