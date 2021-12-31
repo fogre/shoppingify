@@ -1,4 +1,6 @@
 const { gql } = require('apollo-server-express')
+//models
+const Category = require('../../models/category')
 
 const typeDefs = gql`
   extend type Query {
@@ -9,8 +11,13 @@ const typeDefs = gql`
 
 const pingResolvers = {
   Query: {
-    ping: () => {
-      return 'pong'
+    ping: async () => {
+      try {
+        await Category.find({})
+        return 'pong'
+      } catch (e) {
+        throw new Error('Error when contacting the database')
+      }
     }
   }
 }

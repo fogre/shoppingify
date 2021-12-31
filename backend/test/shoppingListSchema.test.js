@@ -1,6 +1,5 @@
 const { setTestClient, loginDefaultUser } = require('./config/testClient')
 const Category = require('../models/category')
-const { USER } = require('./queries/userQueries')
 const {
   SHOPPING_LIST,
   SHOPPING_LIST_FINISH,

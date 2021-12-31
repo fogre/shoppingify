@@ -50,12 +50,12 @@ const createApolloServer = async () => {
     },
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
-      process.env.NODE_ENV === 'production'
-        ? ApolloServerPluginLandingPageProductionDefault({
-            graphRef: "Shoppingify@current",
-            footer: false,
-          })
-        : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
+      process.env.NODE_ENV === 'production' ?
+        ApolloServerPluginLandingPageProductionDefault({
+          graphRef: 'Shoppingify@current',
+          footer: false,
+        }) :
+        ApolloServerPluginLandingPageLocalDefault({ footer: false }),
     ]
   })
 
