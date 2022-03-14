@@ -75,14 +75,13 @@ describe('An Item can', () => {
 
   it('be created with valid image url', async () => {
     const res = await itemAddOne({
-      ...newDefaultItem,
+      name: 'anotherNewItem',
+      note: 'just some stuff',
       image: 'https://i.imgur.com/hVFcyrj.jpeg',
       category: { name: categories[1].name }
     })
-    expect(res.data.itemAddOne).toBeFalsy()
-    expect(res.errors).toBeTruthy()
-    expect(res.errors[0].message.includes('Invalid Imgur image url'))
-      .toBeTruthy()
+    expect(res.data.itemAddOne).toBeTruthy()
+    expect(res.errors).toBeFalsy()
   })
 
   it('not be created with invalid image url', async () => {
